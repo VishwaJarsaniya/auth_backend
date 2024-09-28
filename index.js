@@ -7,12 +7,14 @@ const userRoute = require("./routes/user");
 const app = express();
 
 const PORT = process.env.PORT;
-const url = process.env.mongodbUrl;
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
-connectMongoDb(url);
+mongoose.connect(process.env.mongodbUrl,{useNewUrlParser: true, useUnifiedTopology: true })
+                         .then(()=>{console.log("MongoDb Connected")})
+                         .catch((err)=>{console.log("Error in connecting db", err)})
+
 
 app.use("/user", userRoute);
 
