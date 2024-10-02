@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require('cors');
 const {connectMongoDb} = require("./config/connection");
 const userRoute = require("./routes/user");
 
@@ -11,6 +12,9 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+
+app.use(cors());
+app.options('*', cors());
 
 mongoose.connect(process.env.mongodbUrl,{useNewUrlParser: true, useUnifiedTopology: true })
                          .then(()=>{console.log("MongoDb Connected")})
